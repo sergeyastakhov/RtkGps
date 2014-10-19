@@ -30,6 +30,7 @@ import butterknife.InjectView;
 
 import com.dropbox.sync.android.DbxAccountManager;
 
+import gpsplus.ntripcaster.NTRIPCaster;
 import gpsplus.rtkgps.settings.ProcessingOptions1Fragment;
 import gpsplus.rtkgps.settings.SettingsActivity;
 import gpsplus.rtkgps.settings.SettingsHelper;
@@ -68,6 +69,7 @@ public class MainActivity extends Activity {
     @InjectView(R.id.navigation_drawer) View mNavDrawer;
 
     @InjectView(R.id.navdraw_server_switch) Switch mNavDrawerServerSwitch;
+    @InjectView(R.id.navdraw_ntripcaster_switch) Switch mNavDrawerCasterSwitch;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -123,6 +125,22 @@ public class MainActivity extends Activity {
                     startRtkService();
                 }else {
                     stopRtkService();
+                }
+                invalidateOptionsMenu();
+            }
+        });
+        mNavDrawerCasterSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            private NTRIPCaster mCaster;
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mDrawerLayout.closeDrawer(mNavDrawer);
+                if (isChecked) {
+                    mCaster = new NTRIPCaster(getFileStorageDirectory()+"/lib");
+                    mCaster.start(2101, "none");
+                    //TEST
+                }else {
+                    mCaster.stop();
                 }
                 invalidateOptionsMenu();
             }

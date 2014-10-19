@@ -6,6 +6,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.StrictMode;
 import android.util.Log;
 
+import gpsplus.ntripcaster.NTRIPCaster;
+
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.proj4.PJ;
@@ -39,6 +41,10 @@ public class RtkGps extends Application {
         //ACRA.init(this);
         System.loadLibrary("proj");
         Log.v("Proj4","Proj4 version: "+PJ.getVersion());
+
+        System.loadLibrary("ntripcaster");
+        Log.v("ntripcaster","NTRIP Caster "+NTRIPCaster.getVersion());
+
         System.loadLibrary("rtkgps");
         //set version
         PackageInfo pi;
